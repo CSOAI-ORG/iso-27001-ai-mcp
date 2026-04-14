@@ -1,0 +1,8 @@
+name: iso-27001-ai-mcp
+description: MEOK AI Labs — iso 27001
+vendor: MEOK AI Labs
+homepage: https://meok.ai
+repository: https://github.com/CSOAI-ORG/iso-27001-ai-mcp
+license: MIT
+runtime: python
+entrypoint: server.py
