@@ -1,0 +1,27 @@
+name: Publish to Smithery
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: Publish MCP Server to Smithery
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Publish to Smithery
+        env:
+          SMITHERY_API_KEY: ${{ secrets.SMITHERY_API_KEY }}
+        run: |
+          npx @smithery/cli publish --repo CSOAI-ORG/${{ github.event.repository.name }}
