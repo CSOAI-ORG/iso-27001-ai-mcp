@@ -15,6 +15,11 @@ Install: pip install mcp
 Run:     python server.py
 """
 
+
+import sys, os
+sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
+from auth_middleware import check_access
+
 import json
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
@@ -278,7 +283,7 @@ def audit_isms(
     controls_implemented: Optional[list[str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-) -> str:
+api_key: str = "") -> str:
     """Audit an Information Security Management System against ISO 27001:2022
     Annex A controls (93 controls across 4 themes: Organizational, People,
     Physical, Technological). Returns compliance status per theme with gap
@@ -291,8 +296,12 @@ def audit_isms(
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
     """
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if err := _check_rate_limit(caller, tier):
-        return json.dumps({"error": err})
+        return {"error": err}
 
     implemented = set(controls_implemented or [])
     results = {
@@ -352,7 +361,7 @@ def audit_isms(
         ),
     }
 
-    return json.dumps(results, indent=2)
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -366,7 +375,7 @@ def risk_assessment(
     existing_controls: Optional[list[str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-) -> str:
+api_key: str = "") -> str:
     """Perform information security risk assessment per ISO 27005 methodology.
     Identifies threats, assesses likelihood and impact, calculates risk levels,
     and recommends treatment options with specific ISO 27001 Annex A controls.
@@ -379,8 +388,12 @@ def risk_assessment(
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
     """
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if err := _check_rate_limit(caller, tier):
-        return json.dumps({"error": err})
+        return {"error": err}
 
     existing = set(existing_controls or [])
     threats = threat_scenarios or ISO_27005_RISK_CRITERIA["threat_categories"]
@@ -478,7 +491,7 @@ def risk_assessment(
         else "LOW"
     )
 
-    return json.dumps(results, indent=2)
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -491,7 +504,7 @@ def gap_analysis(
     focus_themes: Optional[list[str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-) -> str:
+api_key: str = "") -> str:
     """Compare current controls to ISO 27001:2022 requirements and identify gaps.
     Provides prioritized remediation roadmap with effort estimates.
 
@@ -502,8 +515,12 @@ def gap_analysis(
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
     """
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if err := _check_rate_limit(caller, tier):
-        return json.dumps({"error": err})
+        return {"error": err}
 
     implemented = set(current_controls)
     themes = focus_themes or ["A.5", "A.6", "A.7", "A.8"]
@@ -584,7 +601,7 @@ def gap_analysis(
         "certification_readiness": "Ready" if coverage >= 90 else "Near-ready" if coverage >= 75 else "Significant work required",
     }
 
-    return json.dumps(results, indent=2)
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -596,7 +613,7 @@ def crosswalk_to_ai(
     focus_area: str = "all",
     caller: str = "anonymous",
     tier: str = "free",
-) -> str:
+api_key: str = "") -> str:
     """Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge.
     Shows how existing ISMS controls extend to AI governance, identifying
     where additional AI-specific controls are needed.
@@ -607,8 +624,12 @@ def crosswalk_to_ai(
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
     """
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if err := _check_rate_limit(caller, tier):
-        return json.dumps({"error": err})
+        return {"error": err}
 
     focus_filters = {
         "data_protection": {"A.5.12", "A.5.34", "A.8.10", "A.8.11", "A.8.12"},
@@ -670,7 +691,7 @@ def crosswalk_to_ai(
         ),
     }
 
-    return json.dumps(results, indent=2)
+    return results
 
 
 def _get_control_title(ctrl_id: str) -> str:
@@ -692,7 +713,7 @@ def generate_soa(
     exclusion_justifications: Optional[dict[str, str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-) -> str:
+api_key: str = "") -> str:
     """Generate a Statement of Applicability (SoA) per ISO 27001:2022 clause 6.1.3(d).
     The SoA documents which Annex A controls are applicable, implemented, excluded,
     and the justification for exclusions. Required for ISO 27001 certification.
@@ -705,8 +726,12 @@ def generate_soa(
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
     """
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if err := _check_rate_limit(caller, tier):
-        return json.dumps({"error": err})
+        return {"error": err}
 
     implemented = set(controls_implemented)
     excluded = set(controls_excluded or [])
@@ -772,7 +797,7 @@ def generate_soa(
         ),
     }
 
-    return json.dumps(soa, indent=2)
+    return soa
 
 
 # ---------------------------------------------------------------------------
@@ -787,7 +812,7 @@ def incident_classification(
     ai_system_involved: bool = False,
     caller: str = "anonymous",
     tier: str = "free",
-) -> str:
+api_key: str = "") -> str:
     """Classify security incidents per ISO 27001 incident management framework
     (controls A.5.24-A.5.28). Determines severity, notification requirements,
     response procedures, and evidence collection needs. Includes AI-specific
@@ -802,8 +827,12 @@ def incident_classification(
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
     """
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if err := _check_rate_limit(caller, tier):
-        return json.dumps({"error": err})
+        return {"error": err}
 
     desc_lower = incident_description.lower()
 
@@ -912,7 +941,7 @@ def incident_classification(
         e for e in result["evidence_requirements"]["evidence_types"] if e
     ]
 
-    return json.dumps(result, indent=2)
+    return result
 
 
 # ---------------------------------------------------------------------------

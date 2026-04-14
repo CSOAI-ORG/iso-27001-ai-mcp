@@ -1,8 +1,123 @@
 name: iso-27001-ai-mcp
-description: MEOK AI Labs — iso 27001
-vendor: MEOK AI Labs
-homepage: https://meok.ai
-repository: https://github.com/CSOAI-ORG/iso-27001-ai-mcp
-license: MIT
-runtime: python
-entrypoint: server.py
+description: '> **By [MEOK AI Labs](https://meok.ai)** -- Sovereign AI tools for everyone.'
+version: 1.0.0
+tools:
+- name: audit_isms
+  description: Audit an Information Security Management System against ISO 27001:2022
+  parameters:
+  - name: organization_context
+    type: string
+    required: true
+  - name: scope_description
+    type: string
+    required: true
+  - name: controls_implemented
+    type: array
+    required: false
+  - name: caller
+    type: string
+    required: false
+  - name: tier
+    type: string
+    required: false
+- name: risk_assessment
+  description: Perform information security risk assessment per ISO 27005 methodology.
+  parameters:
+  - name: system_description
+    type: string
+    required: true
+  - name: assets
+    type: array
+    required: true
+  - name: threat_scenarios
+    type: array
+    required: false
+  - name: existing_controls
+    type: array
+    required: false
+  - name: caller
+    type: string
+    required: false
+  - name: tier
+    type: string
+    required: false
+- name: gap_analysis
+  description: Compare current controls to ISO 27001:2022 requirements and identify
+    gaps.
+  parameters:
+  - name: current_controls
+    type: array
+    required: true
+  - name: target_certification
+    type: string
+    required: false
+  - name: focus_themes
+    type: array
+    required: false
+  - name: caller
+    type: string
+    required: false
+  - name: tier
+    type: string
+    required: false
+- name: crosswalk_to_ai
+  description: Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge.
+  parameters:
+  - name: controls
+    type: array
+    required: false
+  - name: focus_area
+    type: string
+    required: false
+  - name: caller
+    type: string
+    required: false
+  - name: tier
+    type: string
+    required: false
+- name: generate_soa
+  description: Generate a Statement of Applicability (SoA) per ISO 27001:2022 clause
+    6.1.3(d).
+  parameters:
+  - name: organization_name
+    type: string
+    required: true
+  - name: controls_implemented
+    type: array
+    required: true
+  - name: controls_excluded
+    type: array
+    required: false
+  - name: exclusion_justifications
+    type: object
+    required: false
+  - name: caller
+    type: string
+    required: false
+  - name: tier
+    type: string
+    required: false
+- name: incident_classification
+  description: Classify security incidents per ISO 27001 incident management framework
+  parameters:
+  - name: incident_description
+    type: string
+    required: true
+  - name: affected_assets
+    type: array
+    required: true
+  - name: detection_method
+    type: string
+    required: false
+  - name: data_breach
+    type: boolean
+    required: false
+  - name: ai_system_involved
+    type: boolean
+    required: false
+  - name: caller
+    type: string
+    required: false
+  - name: tier
+    type: string
+    required: false

@@ -1,1 +1,217 @@
-{"name":"iso-27001-ai-mcp","vendor":"MEOK AI Labs","homepage":"https://meok.ai","repository":"https://github.com/CSOAI-ORG/iso-27001-ai-mcp","runtime":"python","entrypoint":"server.py"}
+{
+  "name": "iso-27001-ai-mcp",
+  "description": "> **By [MEOK AI Labs](https://meok.ai)** -- Sovereign AI tools for everyone.",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "audit_isms",
+      "description": "Audit an Information Security Management System against ISO 27001:2022",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "organization_context": {
+            "type": "string"
+          },
+          "scope_description": {
+            "type": "string"
+          },
+          "controls_implemented": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "caller": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "organization_context",
+          "scope_description"
+        ]
+      }
+    },
+    {
+      "name": "risk_assessment",
+      "description": "Perform information security risk assessment per ISO 27005 methodology.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "system_description": {
+            "type": "string"
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "threat_scenarios": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "existing_controls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "caller": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "system_description",
+          "assets"
+        ]
+      }
+    },
+    {
+      "name": "gap_analysis",
+      "description": "Compare current controls to ISO 27001:2022 requirements and identify gaps.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "current_controls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "target_certification": {
+            "type": "string"
+          },
+          "focus_themes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "caller": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "current_controls"
+        ]
+      }
+    },
+    {
+      "name": "crosswalk_to_ai",
+      "description": "Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "controls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "focus_area": {
+            "type": "string"
+          },
+          "caller": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "string"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "generate_soa",
+      "description": "Generate a Statement of Applicability (SoA) per ISO 27001:2022 clause 6.1.3(d).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "organization_name": {
+            "type": "string"
+          },
+          "controls_implemented": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "controls_excluded": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "exclusion_justifications": {
+            "type": "object",
+            "nullable": true
+          },
+          "caller": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "organization_name",
+          "controls_implemented"
+        ]
+      }
+    },
+    {
+      "name": "incident_classification",
+      "description": "Classify security incidents per ISO 27001 incident management framework",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "incident_description": {
+            "type": "string"
+          },
+          "affected_assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "detection_method": {
+            "type": "string"
+          },
+          "data_breach": {
+            "type": "boolean"
+          },
+          "ai_system_involved": {
+            "type": "boolean"
+          },
+          "caller": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "incident_description",
+          "affected_assets"
+        ]
+      }
+    }
+  ]
+}
