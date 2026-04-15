@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,4 +23,4 @@ jobs:
         env:
           SMITHERY_API_KEY: ${{ secrets.SMITHERY_API_KEY }}
         run: |
-          npx @smithery/cli publish --repo CSOAI-ORG/${{ github.event.repository.name }}
+          npx @smithery/cli mcp publish "https://github.com/${{ github.repository }}" -n nicholastempleman/${{ github.event.repository.name }}
