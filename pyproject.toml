@@ -10,6 +10,12 @@ license = {file = "LICENSE"}
 requires-python = ">=3.10"
 authors = [{name = "MEOK AI Labs", email = "nicholas@meok.ai"}]
 keywords = ["mcp", "ai-governance", "compliance", "meok"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+]
 dependencies = ["mcp>=1.0.0"]
 
 [project.urls]
