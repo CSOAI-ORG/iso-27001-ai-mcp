@@ -1,6 +1,6 @@
 {
   "name": "iso-27001-ai-mcp",
-  "description": "> **By [MEOK AI Labs](https://meok.ai)** -- Sovereign AI tools for everyone.",
+  "description": "> **By [MEOK AI Labs](https://meok.ai)** \u2014 \n        ",
   "version": "1.0.0",
   "tools": [
     {
@@ -16,11 +16,7 @@
             "type": "string"
           },
           "controls_implemented": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "type": "array"
           },
           "caller": {
             "type": "string"
@@ -45,24 +41,13 @@
             "type": "string"
           },
           "assets": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "array"
           },
           "threat_scenarios": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "type": "array"
           },
           "existing_controls": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "type": "array"
           },
           "caller": {
             "type": "string"
@@ -84,20 +69,13 @@
         "type": "object",
         "properties": {
           "current_controls": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "array"
           },
           "target_certification": {
             "type": "string"
           },
           "focus_themes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "type": "array"
           },
           "caller": {
             "type": "string"
@@ -118,11 +96,7 @@
         "type": "object",
         "properties": {
           "controls": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "type": "array"
           },
           "focus_area": {
             "type": "string"
@@ -147,21 +121,13 @@
             "type": "string"
           },
           "controls_implemented": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "array"
           },
           "controls_excluded": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "type": "array"
           },
           "exclusion_justifications": {
-            "type": "object",
-            "nullable": true
+            "type": "object"
           },
           "caller": {
             "type": "string"
@@ -186,10 +152,7 @@
             "type": "string"
           },
           "affected_assets": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "array"
           },
           "detection_method": {
             "type": "string"

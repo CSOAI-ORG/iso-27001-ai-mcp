@@ -1,5 +1,5 @@
 name: iso-27001-ai-mcp
-description: '> **By [MEOK AI Labs](https://meok.ai)** -- Sovereign AI tools for everyone.'
+description: "\n        "
 version: 1.0.0
 tools:
 - name: audit_isms
