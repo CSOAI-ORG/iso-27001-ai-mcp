@@ -33,7 +33,7 @@ jobs:
           npx @smithery/cli mcp publish "https://github.com/${{ github.repository }}" -n nicholastempleman/${{ github.event.repository.name }} --json
 
       - name: Attest build provenance
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45 # v2
         with:
           subject-name: ${{ github.repository }}
           subject-digest: sha256:${{ github.sha }}
