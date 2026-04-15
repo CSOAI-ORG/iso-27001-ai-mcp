@@ -1,0 +1,61 @@
+{
+  "name": "iso-27001-ai",
+  "description": "ISO/IEC 27001:2022 Information Security Management System compliance server. Audit against all 93 Annex A controls across 4 themes, perform ISO 27005 risk assessments, run gap analysis, generate Statement of Applicability, classify security incidents, and crosswalk to ISO 42001 for AI-specific requirements. By MEOK AI Labs.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/iso-27001-ai-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "audit_isms",
+      "description": "Audit an Information Security Management System against ISO 27001:2022"
+    },
+    {
+      "name": "risk_assessment",
+      "description": "Perform information security risk assessment per ISO 27005 methodology."
+    },
+    {
+      "name": "gap_analysis",
+      "description": "Compare current controls to ISO 27001:2022 requirements and identify gaps."
+    },
+    {
+      "name": "crosswalk_to_ai",
+      "description": "Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge."
+    },
+    {
+      "name": "generate_soa",
+      "description": "Generate a Statement of Applicability (SoA) per ISO 27001:2022 clause 6.1.3(d)."
+    },
+    {
+      "name": "incident_classification",
+      "description": "Classify security incidents per ISO 27001 incident management framework"
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning",
+    "Security & Compliance"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
