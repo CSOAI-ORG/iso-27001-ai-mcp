@@ -1,60 +1,69 @@
-# ISO/IEC 27001 Information Security Management MCP Server
+# ISO 27001 AI
 
-> **By [MEOK AI Labs](https://meok.ai)** -- Sovereign AI tools for everyone.
+> By [MEOK AI Labs](https://meok.ai) — ISO/IEC 27001:2022 Information Security Management System compliance
 
-ISO/IEC 27001:2022 compliance assessment for AI systems. Audit against all 93 Annex A controls across 4 themes, perform ISO 27005 risk assessments, run gap analysis, generate Statement of Applicability, classify incidents, and bridge to ISO 42001 for AI-specific ISMS.
-
-Part of the **CSOAI Governance Suite**: ISO 27001 + ISO 42001 + GDPR + SOC 2 + EU AI Act.
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-255+_servers-purple)](https://meok.ai)
-
-## Tools
-
-| Tool | Description |
-|------|-------------|
-| `audit_isms` | Audit against ISO 27001 Annex A controls (93 controls, 4 themes) |
-| `risk_assessment` | Information security risk assessment per ISO 27005 |
-| `gap_analysis` | Compare current controls to ISO 27001 requirements |
-| `crosswalk_to_ai` | Map ISO 27001 controls to ISO 42001 AI requirements |
-| `generate_soa` | Generate Statement of Applicability (certification requirement) |
-| `incident_classification` | Classify security incidents with AI-specific categories |
-
-## Quick Start
+## Installation
 
 ```bash
-pip install mcp
-git clone https://github.com/CSOAI-ORG/iso-27001-ai-mcp.git
-cd iso-27001-ai-mcp
+pip install iso-27001-ai-mcp
+```
+
+## Usage
+
+```bash
 python server.py
 ```
 
-## Claude Desktop Config
+## Tools
 
-```json
-{
-  "mcpServers": {
-    "iso-27001-ai": {
-      "command": "python",
-      "args": ["server.py"],
-      "cwd": "/path/to/iso-27001-ai-mcp"
-    }
-  }
-}
-```
+### `audit_isms`
+Audit against ISO 27001:2022 Annex A controls (93 controls across 4 themes: Organizational, People, Physical, Technological).
 
-## Coverage
+**Parameters:**
+- `organization_description` (str): Description of the organization and its ISMS
+- `scope` (str): Audit scope
+- `api_key` (str): API key for authentication
 
-- **93 Annex A Controls** across 4 themes (Organizational, People, Physical, Technological)
-- **7 ISMS Clauses** (4-10) with all subclauses
-- **20 ISO 27001-to-42001 bridge mappings** with alignment ratings
-- **10 ISO 27005 threat categories** for AI-specific risk assessment
-- **AI incident classification** with adversarial, poisoning, extraction categories
+### `risk_assessment`
+Information security risk assessment per ISO 27005 methodology.
 
-## The Bridge Advantage
+**Parameters:**
+- `asset_description` (str): Description of the information asset
+- `threat_description` (str): Threat scenario to assess
+- `api_key` (str): API key
 
-The `crosswalk_to_ai` tool uniquely maps ISO 27001 controls to ISO 42001 AI management requirements. Organizations with existing ISO 27001 certification can see exactly how their ISMS extends to AI governance.
+### `gap_analysis`
+Compare current controls to ISO 27001 requirements and identify gaps.
+
+**Parameters:**
+- `current_controls` (str): Description of existing security controls
+- `api_key` (str): API key
+
+### `crosswalk_to_ai`
+Map ISO 27001 controls to ISO 42001 AI management system requirements.
+
+**Parameters:**
+- `control_id` (str): ISO 27001 control identifier
+- `api_key` (str): API key
+
+### `generate_soa`
+Generate Statement of Applicability (SoA) for certification.
+
+**Parameters:**
+- `organization_description` (str): Organization context
+- `api_key` (str): API key
+
+### `incident_classification`
+Classify security incidents with AI-specific categories.
+
+**Parameters:**
+- `incident_description` (str): Description of the security incident
+- `api_key` (str): API key
+
+## Authentication
+
+Free tier: 10 calls/day. Upgrade at [meok.ai/pricing](https://meok.ai/pricing) for unlimited access.
 
 ## License
 
-MIT -- see [LICENSE](LICENSE)
+MIT — MEOK AI Labs

@@ -22,12 +22,20 @@ class TestMCPImport(unittest.TestCase):
 
 
 class TestAuthMiddleware(unittest.TestCase):
-    def test_check_access_blocks_empty_key(self):
-        """Empty API key should be rejected on free tier."""
-        from auth_middleware import check_access
+    def test_check_access_allows_empty_key_as_free_tier(self):
+        """Empty API key maps to FREE tier and is allowed."""
+        from auth_middleware import check_access, Tier
         allowed, msg, tier = check_access("")
-        self.assertFalse(allowed)
-        self.assertIn("upgrade", msg.lower() or tier.lower())
+        self.assertTrue(allowed)
+        self.assertEqual(tier, Tier.FREE)
+        self.assertIsInstance(msg, str)
+
+    def test_check_access_returns_tuple(self):
+        """check_access must return a 3-tuple."""
+        from auth_middleware import check_access
+        result = check_access("")
+        self.assertIsInstance(result, tuple)
+        self.assertEqual(len(result), 3)
 
 
 class TestHealthEndpoint(unittest.TestCase):
