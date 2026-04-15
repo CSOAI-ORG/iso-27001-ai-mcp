@@ -1,0 +1,10 @@
+{
+  "name": "iso-27001-ai-mcp",
+  "description": "MEOK AI Labs \u2014 iso-27001-ai-mcp",
+  "vendor": "MEOK AI Labs",
+  "homepage": "https://meok.ai",
+  "repository": "https://github.com/CSOAI-ORG/iso-27001-ai-mcp",
+  "license": "MIT",
+  "runtime": "python",
+  "entryPoint": "mcp-wrapper.py"
+}

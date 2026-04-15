@@ -1,0 +1,20 @@
+FROM python:3.14-slim
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends git build-essential && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir uv
+
+RUN useradd -m -s /bin/bash nicholas &&     mkdir -p /home/nicholas/clawd/meok-labs-engine/shared &&     chown -R nicholas:nicholas /home/nicholas
+
+WORKDIR /app
+USER nicholas
+
+RUN uv venv /home/nicholas/.venv
+ENV PATH="/home/nicholas/.venv/bin:$PATH"
+
+COPY --chown=nicholas:nicholas . /app
+RUN uv pip install -e .
+
+CMD ["python", "mcp-wrapper.py"]

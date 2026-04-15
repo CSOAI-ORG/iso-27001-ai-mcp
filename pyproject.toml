@@ -25,3 +25,6 @@ Repository = "https://github.com/CSOAI-ORG/iso-27001-ai-mcp"
 [tool.hatch.build.targets.wheel]
 packages = ["."]
 only-include = ["server.py"]
+
+[project.scripts]
+iso_27001_ai_mcp = "server:main"
