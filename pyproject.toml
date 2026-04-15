@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "iso-27001-ai-mcp"
 version = "1.0.0"
-description = "MEOK AI Labs — iso-27001-ai-mcp"
+description = "AI-powered iso 27001 ai MCP server for agents. Supports audit isms, risk assessment, gap analysis. By MEOK AI Labs."
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
 authors = [{name = "MEOK AI Labs", email = "nicholas@meok.ai"}]
