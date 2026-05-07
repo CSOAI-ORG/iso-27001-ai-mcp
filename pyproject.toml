@@ -4,7 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "iso-27001-ai-mcp"
-version = "1.0.2"
+version = "1.0.3"
+readme = "README.md"
 description = "AI-powered iso 27001 ai MCP server for agents. Supports audit isms, risk assessment, gap analysis. By MEOK AI Labs."
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
