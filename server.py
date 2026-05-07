@@ -295,6 +295,22 @@ api_key: str = "") -> str:
         controls_implemented: List of Annex A control IDs already implemented (e.g. ["A.5.1", "A.8.24"])
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need to assess, audit, or verify compliance
+        requirements. Ideal for gap analysis, readiness checks, and generating
+        compliance documentation.
+
+    When NOT to use:
+        Do not use as a substitute for qualified legal counsel. This tool
+        provides technical compliance guidance, not legal advice.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -387,6 +403,21 @@ api_key: str = "") -> str:
         existing_controls: Currently implemented controls that reduce risk
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need to assess, audit, or verify compliance
+        requirements. Ideal for gap analysis, readiness checks, and generating
+        compliance documentation.
+
+    When NOT to use:
+        Do not use as a substitute for qualified legal counsel. This tool
+        provides technical compliance guidance, not legal advice.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -514,6 +545,22 @@ api_key: str = "") -> str:
         focus_themes: Optional filter to specific themes ["A.5", "A.6", "A.7", "A.8"]
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need to assess, audit, or verify compliance
+        requirements. Ideal for gap analysis, readiness checks, and generating
+        compliance documentation.
+
+    When NOT to use:
+        Do not use as a substitute for qualified legal counsel. This tool
+        provides technical compliance guidance, not legal advice.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -623,6 +670,22 @@ api_key: str = "") -> str:
         focus_area: Focus on "all", "data_protection", "model_security", "supply_chain", or "incident_management"
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need to assess, audit, or verify compliance
+        requirements. Ideal for gap analysis, readiness checks, and generating
+        compliance documentation.
+
+    When NOT to use:
+        Do not use as a substitute for qualified legal counsel. This tool
+        provides technical compliance guidance, not legal advice.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -725,6 +788,21 @@ api_key: str = "") -> str:
         exclusion_justifications: Dict mapping excluded control IDs to justification text
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need to assess, audit, or verify compliance
+        requirements. Ideal for gap analysis, readiness checks, and generating
+        compliance documentation.
+
+    When NOT to use:
+        Do not use as a substitute for qualified legal counsel. This tool
+        provides technical compliance guidance, not legal advice.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -826,6 +904,22 @@ api_key: str = "") -> str:
         ai_system_involved: Whether an AI system was involved in or affected by the incident
         caller: Caller identifier for rate limiting
         tier: Access tier (free/pro)
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need to assess, audit, or verify compliance
+        requirements. Ideal for gap analysis, readiness checks, and generating
+        compliance documentation.
+
+    When NOT to use:
+        Do not use as a substitute for qualified legal counsel. This tool
+        provides technical compliance guidance, not legal advice.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
