@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+Buy Pro: https://www.csoai.org/checkout
+
 ISO/IEC 27001 Information Security Management MCP Server
 =========================================================
 By MEOK AI Labs | https://meok.ai
@@ -17,9 +19,17 @@ Run:     python server.py
 
 
 import sys, os
-sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
-from auth_middleware import check_access
+try:
+    from meok_auth import check_access
+except ImportError:
+    try:
+        from auth_middleware import check_access
+    except ImportError:
+        def check_access(api_key: str = "") -> tuple:
+            return (True, "Open access", "community")
 
+import hashlib
+import hmac
 import json
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
@@ -27,12 +37,76 @@ from typing import Optional
 
 from mcp.server.fastmcp import FastMCP
 
+_ATTESTATION_KEY = os.environ.get("MEOK_ATTESTATION_KEY")
+if not _ATTESTATION_KEY:
+    import warnings
+    warnings.warn("MEOK_ATTESTATION_KEY not set. Attestation signatures will be unsigned. Set this environment variable in production.", stacklevel=2)
+    _ATTESTATION_KEY = "dev-only-unsigned"
+
+def _attest(data: dict) -> dict:
+    """Add HMAC-SHA256 attestation to a response dict."""
+    payload = json.dumps(data, sort_keys=True, default=str)
+    signature = hmac.new(
+        _ATTESTATION_KEY.encode(),
+        payload.encode(),
+        hashlib.sha256
+    ).hexdigest()
+    data["_attestation"] = {
+        "algorithm": "HMAC-SHA256",
+        "signature": signature[:16],
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "verifiable": _ATTESTATION_KEY != "dev-only-unsigned",
+    }
+    if _ATTESTATION_KEY == "dev-only-unsigned":
+        data["_attestation"]["signed"] = False
+        data["_attestation"]["warning"] = "UNSIGNED: Set MEOK_ATTESTATION_KEY for signed attestations"
+        data["_attestation"]["upgrade"] = "Get signed attestations your auditor accepts → https://councilof.ai"
+    return data
+
+try:
+    from pydantic import BaseModel, Field, field_validator, ValidationError
+    _PYDANTIC_AVAILABLE = True
+
+    class AuditIsmsInput(BaseModel):
+        controls_implemented: Optional[list[str]] = Field(default=None, description="List of implemented Annex A control IDs")
+
+    class GapAnalysisInput(BaseModel):
+        target_certification: str = Field(default="full", description="Target certification level")
+
+        @field_validator("target_certification")
+        @classmethod
+        def validate_target(cls, v: str) -> str:
+            allowed = {"full", "core", "ai-focused"}
+            if v not in allowed:
+                raise ValueError(f"target_certification must be one of {allowed}, got '{v}'")
+            return v
+
+except ImportError:
+    _PYDANTIC_AVAILABLE = False
+
 # Tier authentication (connects to Stripe subscriptions)
 try:
-    from auth_middleware import get_tier_from_api_key, Tier, TIER_LIMITS
+    from meok_auth import get_tier_from_api_key, Tier, TIER_LIMITS
     AUTH_AVAILABLE = True
 except ImportError:
-    AUTH_AVAILABLE = False  # Runs without auth in dev mode
+    try:
+        from auth_middleware import get_tier_from_api_key, Tier, TIER_LIMITS
+        AUTH_AVAILABLE = True
+    except ImportError:
+        class Tier:
+            FREE = "free"
+            STARTER = "starter"
+            PROFESSIONAL = "professional"
+            ENTERPRISE = "enterprise"
+        TIER_LIMITS = {
+            Tier.FREE: {"calls_per_day": 10, "frameworks": 1, "audit_trail": False},
+            Tier.STARTER: {"calls_per_day": 100, "frameworks": 1, "audit_trail": False},
+            Tier.PROFESSIONAL: {"calls_per_day": 1000, "frameworks": 5, "audit_trail": True},
+            Tier.ENTERPRISE: {"calls_per_day": -1, "frameworks": -1, "audit_trail": True},
+        }
+        def get_tier_from_api_key(api_key: str = ""):
+            return Tier.FREE
+        AUTH_AVAILABLE = False
 
 # ---------------------------------------------------------------------------
 # Rate limiting
@@ -283,7 +357,7 @@ def audit_isms(
     controls_implemented: Optional[list[str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-api_key: str = "") -> str:
+    api_key: str = "") -> str:
     """Audit an Information Security Management System against ISO 27001:2022
     Annex A controls (93 controls across 4 themes: Organizational, People,
     Physical, Technological). Returns compliance status per theme with gap
@@ -314,10 +388,16 @@ api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
 
     if err := _check_rate_limit(caller, tier):
         return {"error": err}
+
+    if _PYDANTIC_AVAILABLE:
+        try:
+            AuditIsmsInput(controls_implemented=controls_implemented)
+        except ValidationError as ve:
+            return {"error": "validation_error", "message": str(ve)}
 
     implemented = set(controls_implemented or [])
     results = {
@@ -377,7 +457,7 @@ api_key: str = "") -> str:
         ),
     }
 
-    return results
+    return _attest(results)
 
 
 # ---------------------------------------------------------------------------
@@ -391,7 +471,7 @@ def risk_assessment(
     existing_controls: Optional[list[str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-api_key: str = "") -> str:
+    api_key: str = "") -> str:
     """Perform information security risk assessment per ISO 27005 methodology.
     Identifies threats, assesses likelihood and impact, calculates risk levels,
     and recommends treatment options with specific ISO 27001 Annex A controls.
@@ -421,7 +501,7 @@ api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
 
     if err := _check_rate_limit(caller, tier):
         return {"error": err}
@@ -535,7 +615,7 @@ def gap_analysis(
     focus_themes: Optional[list[str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-api_key: str = "") -> str:
+    api_key: str = "") -> str:
     """Compare current controls to ISO 27001:2022 requirements and identify gaps.
     Provides prioritized remediation roadmap with effort estimates.
 
@@ -564,10 +644,16 @@ api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
 
     if err := _check_rate_limit(caller, tier):
         return {"error": err}
+
+    if _PYDANTIC_AVAILABLE:
+        try:
+            GapAnalysisInput(target_certification=target_certification)
+        except ValidationError as ve:
+            return {"error": "validation_error", "message": str(ve)}
 
     implemented = set(current_controls)
     themes = focus_themes or ["A.5", "A.6", "A.7", "A.8"]
@@ -660,7 +746,7 @@ def crosswalk_to_ai(
     focus_area: str = "all",
     caller: str = "anonymous",
     tier: str = "free",
-api_key: str = "") -> str:
+    api_key: str = "") -> str:
     """Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge.
     Shows how existing ISMS controls extend to AI governance, identifying
     where additional AI-specific controls are needed.
@@ -689,7 +775,7 @@ api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
 
     if err := _check_rate_limit(caller, tier):
         return {"error": err}
@@ -776,7 +862,7 @@ def generate_soa(
     exclusion_justifications: Optional[dict[str, str]] = None,
     caller: str = "anonymous",
     tier: str = "free",
-api_key: str = "") -> str:
+    api_key: str = "") -> str:
     """Generate a Statement of Applicability (SoA) per ISO 27001:2022 clause 6.1.3(d).
     The SoA documents which Annex A controls are applicable, implemented, excluded,
     and the justification for exclusions. Required for ISO 27001 certification.
@@ -820,7 +906,7 @@ api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
 
     if err := _check_rate_limit(caller, tier):
         return {"error": err}
@@ -889,7 +975,7 @@ api_key: str = "") -> str:
         ),
     }
 
-    return soa
+    return _attest(soa)
 
 
 # ---------------------------------------------------------------------------
@@ -904,7 +990,7 @@ def incident_classification(
     ai_system_involved: bool = False,
     caller: str = "anonymous",
     tier: str = "free",
-api_key: str = "") -> str:
+    api_key: str = "") -> str:
     """Classify security incidents per ISO 27001 incident management framework
     (controls A.5.24-A.5.28). Determines severity, notification requirements,
     response procedures, and evidence collection needs. Includes AI-specific
@@ -951,7 +1037,7 @@ api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
 
     if err := _check_rate_limit(caller, tier):
         return {"error": err}
@@ -1069,5 +1155,8 @@ api_key: str = "") -> str:
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
-if __name__ == "__main__":
+def main():
     mcp.run()
+
+if __name__ == '__main__':
+    main()

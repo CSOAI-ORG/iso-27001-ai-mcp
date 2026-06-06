@@ -12,7 +12,7 @@ Usage in any server.py:
     async def my_tool(query: str, api_key: str = "") -> str:
         allowed, msg, tier = check_access(api_key)
         if not allowed:
-            return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+            return json.dumps({"error": msg, "upgrade_url": "https://buy.stripe.com/00wfZjcgAeUW4c5cyQ8k90K"})
         # ... tool logic ...
         audit_log(api_key, "my_tool", "eu_ai_act", "result_summary", tier)
         return json.dumps(result)
@@ -121,7 +121,7 @@ def check_access(api_key: str = "", framework: str = None) -> Tuple[bool, str, T
         return (
             False,
             f"Rate limit reached ({max_calls}/day on {tier.value} tier). "
-            f"Upgrade at https://meok.ai/pricing",
+            f"Upgrade at https://buy.stripe.com/00wfZjcgAeUW4c5cyQ8k90K",
             tier,
         )
     
@@ -141,7 +141,7 @@ def require_tier(minimum: Tier, current: Tier) -> Tuple[bool, str]:
         return (
             False,
             f"Requires {minimum.value} tier. Current: {current.value}. "
-            f"Upgrade at https://meok.ai/pricing",
+            f"Upgrade at https://buy.stripe.com/00wfZjcgAeUW4c5cyQ8k90K",
         )
     return True, "OK"
 
