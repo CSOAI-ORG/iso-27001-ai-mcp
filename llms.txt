@@ -1,0 +1,33 @@
+# Iso 27001 Ai MCP
+
+> **⚖️ Built by [MEOK AI Labs](https://meok.ai) / [CSOAI](https://csoai.org).** Need this applied to _your_ system fast? Book a 30-min Founder Office Hour (£29) → **https://meok.ai/work** · Full governance platform → **https://meok.ai**
+
+`iso-27001-ai-mcp` is a Model Context Protocol (MCP) server by MEOK AI Labs.
+
+## Install
+
+```bash
+pip install iso-27001-ai-mcp
+```
+
+Or run without installing:
+
+```bash
+uvx iso-27001-ai-mcp
+```
+
+## Tools
+
+- `audit_isms` — Audit an Information Security Management System against ISO 27001:2022
+- `risk_assessment` — Perform information security risk assessment per ISO 27005 methodology.
+- `gap_analysis` — Compare current controls to ISO 27001:2022 requirements and identify gaps.
+- `crosswalk_to_ai` — Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge.
+- `generate_soa` — Generate a Statement of Applicability (SoA) per ISO 27001:2022 clause 6.1.3(d).
+- `incident_classification` — Classify security incidents per ISO 27001 incident management framework
+
+## Links
+
+- Source: https://github.com/CSOAI-ORG/iso-27001-ai-mcp
+- PyPI: https://pypi.org/project/iso-27001-ai-mcp/
+- MEOK AI Labs: https://meok.ai
+- Council of AI: https://councilof.ai
