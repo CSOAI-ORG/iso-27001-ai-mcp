@@ -1,0 +1,77 @@
+{
+  "name": "iso-27001-ai-mcp",
+  "description": "Iso 27001 Ai MCP Server by MEOK AI Labs",
+  "url": "https://proofof.ai/scorecard/iso-27001-ai-mcp.html",
+  "version": "1.0.10",
+  "protocolVersion": "0.2.0",
+  "provider": {
+    "organization": "MEOK AI Labs",
+    "url": "https://meok.ai"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
+  "skills": [
+    {
+      "id": "audit_isms",
+      "name": "Audit Isms",
+      "description": "audit_isms via iso-27001-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "risk_assessment",
+      "name": "Risk Assessment",
+      "description": "risk_assessment via iso-27001-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "gap_analysis",
+      "name": "Gap Analysis",
+      "description": "gap_analysis via iso-27001-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "crosswalk_to_ai",
+      "name": "Crosswalk To Ai",
+      "description": "crosswalk_to_ai via iso-27001-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "generate_soa",
+      "name": "Generate Soa",
+      "description": "generate_soa via iso-27001-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "incident_classification",
+      "name": "Incident Classification",
+      "description": "incident_classification via iso-27001-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    }
+  ]
+}

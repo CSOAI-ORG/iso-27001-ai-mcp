@@ -1,0 +1,24 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "iso-27001-ai-mcp",
+    "description": "Iso 27001 Ai MCP Server by MEOK AI Labs",
+    "version": "1.0.10",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "iso-27001-ai-mcp"
+      }
+    ],
+    "capabilities": [
+      "audit_isms",
+      "risk_assessment",
+      "gap_analysis",
+      "crosswalk_to_ai",
+      "generate_soa",
+      "incident_classification"
+    ]
+  }
+}
