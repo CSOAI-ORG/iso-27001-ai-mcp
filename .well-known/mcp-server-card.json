@@ -1,0 +1,31 @@
+{
+  "name": "iso-27001-ai-mcp",
+  "title": "Iso 27001 Ai Mcp",
+  "description": "AI-powered iso 27001 ai MCP server for agents. Supports audit isms, risk assessment, gap analysis. By MEOK AI Labs.",
+  "version": "1.0.10",
+  "homepage": "https://meok.ai",
+  "license": "MIT",
+  "transport": {
+    "type": "stdio"
+  },
+  "tools": [
+    {
+      "name": "audit_isms"
+    },
+    {
+      "name": "risk_assessment"
+    },
+    {
+      "name": "gap_analysis"
+    },
+    {
+      "name": "crosswalk_to_ai"
+    },
+    {
+      "name": "generate_soa"
+    },
+    {
+      "name": "incident_classification"
+    }
+  ]
+}

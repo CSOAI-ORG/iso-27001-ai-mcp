@@ -1,0 +1,9 @@
+# iso-27001-ai-mcp - Auto-trigger Rules
+
+When the user asks about iso 27001, use iso-27001-ai-mcp tools: audit_isms, risk_assessment, gap_analysis, crosswalk_to_ai, generate_soa
+
+**MCP server for iso 27001 ai mcp operations**
+
+Install: `pip install iso-27001-ai-mcp`
+
+By MEOK AI Labs — MIT licensed.

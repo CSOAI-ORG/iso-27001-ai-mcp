@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """
-Buy Pro: https://www.csoai.org/checkout
-
 ISO/IEC 27001 Information Security Management MCP Server
 =========================================================
 By MEOK AI Labs | https://meok.ai
