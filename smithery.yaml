@@ -1,34 +1,53 @@
 name: iso-27001-ai-mcp
-description: "ISO/IEC 27001:2022 ISMS compliance - audit 93 Annex A controls across 4 themes, perform ISO 27005 risk assessments, generate Statement of Applicability, classify incidents, and crosswalk to ISO 42001"
+description: ISO/IEC 27001:2022 ISMS compliance - audit 93 Annex A controls across
+  4 themes, perform ISO 27005 risk assessments, generate Statement of Applicability,
+  classify incidents, and crosswalk to ISO 42001
 version: 1.0.5
 author: MEOK AI Labs
 homepage: https://safetyof.ai
 repository: https://github.com/MEOK-AI-Labs/iso-27001-ai-mcp
 license: MIT
 categories:
-  - compliance
-  - governance
-  - cybersecurity
-
+- compliance
+- governance
+- cybersecurity
 tools:
-  - name: audit_isms
-    description: "Audit an Information Security Management System against ISO 27001:2022 Annex A controls (93 controls across 4 themes) with gap identification and remediation priorities"
-  - name: risk_assessment
-    description: "Perform information security risk assessment per ISO 27005 methodology with AI-specific threat mapping and control recommendations"
-  - name: gap_analysis
-    description: "Compare current controls to ISO 27001:2022 requirements with prioritized remediation roadmap and effort estimates"
-  - name: crosswalk_to_ai
-    description: "Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge showing where additional AI controls are needed"
-  - name: generate_soa
-    description: "Generate a Statement of Applicability documenting which Annex A controls are implemented, justified exclusions, and control effectiveness"
-  - name: incident_classification
-    description: "Classify security incidents per ISO 27035 with severity assessment, containment priorities, and ISO 27001 control mappings"
-
+- name: audit_isms
+  description: Audit an Information Security Management System against ISO 27001:2022
+    Annex A controls (93 controls across 4 themes) with gap identification and remediation
+    priorities
+- name: risk_assessment
+  description: Perform information security risk assessment per ISO 27005 methodology
+    with AI-specific threat mapping and control recommendations
+- name: gap_analysis
+  description: Compare current controls to ISO 27001:2022 requirements with prioritized
+    remediation roadmap and effort estimates
+- name: crosswalk_to_ai
+  description: Map ISO 27001 controls to AI-specific requirements via ISO 42001 bridge
+    showing where additional AI controls are needed
+- name: generate_soa
+  description: Generate a Statement of Applicability documenting which Annex A controls
+    are implemented, justified exclusions, and control effectiveness
+- name: incident_classification
+  description: Classify security incidents per ISO 27035 with severity assessment,
+    containment priorities, and ISO 27001 control mappings
 build:
   type: python
   entrypoint: server.py
   dependencies:
-    - mcp>=1.0.0
-
+  - mcp>=1.0.0
 runtime:
-  python: ">=3.10"
+  python: '>=3.10'
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+    - apiKey
+    properties:
+      apiKey:
+        type: string
+        description: Your MEOK API Key
+  commandFunction: "(config) => ({\n  command: 'uvx',\n  args: ['iso-27001-ai-mcp',\
+    \ '--api-key', config.apiKey],\n  env: {\n    MEOK_API_KEY: config.apiKey\n  }\n\
+    })"
