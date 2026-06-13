@@ -4,9 +4,8 @@
   "version": "1.0.12",
   "description": "Iso 27001 Ai MCP Server by MEOK AI Labs",
   "repository": {
-    "type": "git",
     "url": "https://github.com/CSOAI-ORG/iso-27001-ai-mcp",
-    "source": "https://github.com/CSOAI-ORG/iso-27001-ai-mcp"
+    "source": "github"
   },
   "packages": [
     {
