@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      attestations: write
       id-token: write
     steps:
       - name: Checkout repository
@@ -31,10 +30,3 @@ jobs:
           SMITHERY_API_KEY: ${{ secrets.SMITHERY_API_KEY }}
         run: |
           npx @smithery/cli mcp publish "https://github.com/${{ github.repository }}" -n nicholastempleman/${{ github.event.repository.name }} --json
-
-      - name: Attest build provenance
-        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
-        with:
-          subject-name: ${{ github.repository }}
-          subject-digest: sha256:${{ github.sha }}
-          push-to-registry: false
