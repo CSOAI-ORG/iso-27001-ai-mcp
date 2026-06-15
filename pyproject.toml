@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "iso-27001-ai-mcp"
-version = "1.0.10"
+version = "1.0.12"
 readme = "README.md"
 description = "AI-powered iso 27001 ai MCP server for agents. Supports audit isms, risk assessment, gap analysis. By MEOK AI Labs."
 license = {file = "LICENSE"}
@@ -25,7 +25,7 @@ Repository = "https://github.com/CSOAI-ORG/iso-27001-ai-mcp"
 
 [tool.hatch.build.targets.wheel]
 packages = ["."]
-only-include = ["server.py"]
+only-include = ["auth_middleware.py", "server.py"]
 
 [project.scripts]
 iso_27001_ai_mcp = "server:main"

@@ -1,0 +1,128 @@
+{
+  "name": "Iso 27001 Ai Mcp",
+  "version": "1.0.10",
+  "url": "https://mcp.meok.ai/iso-27001-ai-mcp/a2a",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "protocolVersion": "0.3.0",
+  "description": "AI-powered iso 27001 ai MCP server for agents. Supports audit isms, risk assessment, gap analysis. By MEOK AI Labs.",
+  "provider": {
+    "organization": "MEOK AI LABS",
+    "url": "https://meok.ai"
+  },
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "audit_isms",
+      "name": "Audit Isms",
+      "description": "Audit Isms — a tool of the iso-27001-ai-mcp MCP.",
+      "tags": [
+        "audit"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "risk_assessment",
+      "name": "Risk Assessment",
+      "description": "Risk Assessment — a tool of the iso-27001-ai-mcp MCP.",
+      "tags": [
+        "audit"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "gap_analysis",
+      "name": "Gap Analysis",
+      "description": "Gap Analysis — a tool of the iso-27001-ai-mcp MCP.",
+      "tags": [
+        "audit"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "crosswalk_to_ai",
+      "name": "Crosswalk To Ai",
+      "description": "Crosswalk To Ai — a tool of the iso-27001-ai-mcp MCP.",
+      "tags": [
+        "audit"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "generate_soa",
+      "name": "Generate Soa",
+      "description": "Generate Soa — a tool of the iso-27001-ai-mcp MCP.",
+      "tags": [
+        "audit"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "incident_classification",
+      "name": "Incident Classification",
+      "description": "Incident Classification — a tool of the iso-27001-ai-mcp MCP.",
+      "tags": [
+        "audit"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    }
+  ],
+  "documentationUrl": "https://meok.ai",
+  "x-meok": {
+    "mcp_name": "iso-27001-ai-mcp",
+    "verifier": "https://proofof.ai/verify",
+    "governed_by": "CSOAI 52-article charter"
+  }
+}
