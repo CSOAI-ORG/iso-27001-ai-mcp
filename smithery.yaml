@@ -44,7 +44,7 @@ description: ISO/IEC 27001:2022 ISMS compliance - audit 93 Annex A controls acro
 version: 1.0.5
 author: MEOK AI Labs
 homepage: https://safetyof.ai
-repository: https://github.com/MEOK-AI-Labs/iso-27001-ai-mcp
+repository: https://github.com/CSOAI-ORG/iso-27001-ai-mcp
 license: MIT
 categories:
 - compliance
