@@ -30,7 +30,7 @@ async def server_card(request: Request) -> Response:
         {
             "$schema": "https://schema.smithery.ai/server-card.json",
             "version": "1.0.0",
-            "protocolVersion": "2025-11-25",
+            "protocolVersion": "2026-07-28",
             "serverInfo": {
                 "name": SERVICE_NAME,
                 "description": f"MEOK AI Labs — {SERVICE_NAME}",
@@ -59,7 +59,7 @@ async def server_card(request: Request) -> Response:
 async def mcp_manifest(request: Request) -> Response:
     return JSONResponse(
         {
-            "mcp_version": "2025-11-25",
+            "mcp_version": "2026-07-28",
             "endpoints": [
                 {
                     "type": "streamable-http",
@@ -81,5 +81,25 @@ async def health(request: Request) -> Response:
 
 
 if __name__ == "__main__":
-    mcp_server.settings.host = "0.0.0.0"
-    mcp_server.run(transport="streamable-http")
+    # MCP 2026-07-28 wire - header-add migration (2026-10-08): every ingress
+    # exchange passes through translate_request, which validates Mcp-Method /
+    # Mcp-Name, injects params._meta.protocolVersion = "2026-07-28" and strips
+    # Mcp-Session-Id (stateless wire - it is never emitted). Legacy handshake
+    # clients get a local initialize / server/discover answer from the shim.
+    # json_response=True because the shim buffers bodies: no SSE stream passes
+    # through it. Refs: MIGRATION_NOTE.md, MCP_2026_WIRE_MIGRATION_PLAN_2026-10-07.md.
+    import uvicorn
+
+    from mcp2026_shim import WIRE_2026, ShimASGI, ShimConfig
+
+    HOST = os.environ.get("MCP_HOST", "0.0.0.0")
+    PORT = int(os.environ.get("MCP_PORT", os.environ.get("PORT", "8000")))
+
+    app = ShimASGI(
+        mcp_server.streamable_http_app(json_response=True, host=HOST),
+        ShimConfig(
+            protocol_version=WIRE_2026,
+            server_info={"name": SERVICE_NAME, "version": "2026-07-28-wire"},
+        ),
+    )
+    uvicorn.run(app, host=HOST, port=PORT, log_level="info")
