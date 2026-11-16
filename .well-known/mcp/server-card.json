@@ -54,7 +54,7 @@
       "calls_per_day": 15
     },
     "pro": {
-      "price": "$29/month",
+      "price": "quoted per job",
       "url": "https://meok.ai/pricing"
     }
   }

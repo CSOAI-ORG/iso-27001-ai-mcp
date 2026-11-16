@@ -8,8 +8,8 @@ pip install iso-27001-ai-mcp
 
 ## Auth & Rate Limits
 - Free tier: 10 calls/day. No API key required.
-- Pro tier (£79/mo): unlimited + signed attestations.
-- Enterprise (£1,499/mo): white-label.
+- Pro tier: unlimited + signed attestations.
+- Enterprise: white-label.
 
 ## Tools
 
